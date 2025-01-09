@@ -26,7 +26,7 @@ extension AppsFlyer.Business {
 
 extension AppsFlyer.Business.Service: AppsFlyer.Business.IService {
     public func setup(with config: Model.Config) async -> Result<Void, Err> {
-        appsFlyerSDK.currentDeviceLanguage = NSLocale.current.language.languageCode?.identifier
+        appsFlyerSDK.currentDeviceLanguage = config.language
         appsFlyerSDK.appleAppID = config.appId
         appsFlyerSDK.appsFlyerDevKey = config.apiKey
         appsFlyerSDK.isDebug = config.debugEnabled
