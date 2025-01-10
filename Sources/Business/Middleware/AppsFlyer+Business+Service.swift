@@ -2,7 +2,7 @@ import Foundation
 import AppsFlyerLib
 
 extension AppsFlyer.Business {
-    public protocol IService: Sendable {
+    public protocol IService: Actor {
         typealias Model = AppsFlyer.Business.Model
         typealias Err = AppsFlyer.Business.Err
 
