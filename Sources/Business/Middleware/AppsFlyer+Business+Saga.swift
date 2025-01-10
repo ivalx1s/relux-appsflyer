@@ -6,7 +6,6 @@ extension AppsFlyer.Business {
     }
 }
 
-
 extension AppsFlyer.Business {
     public actor Saga {
         private let svc: IService
@@ -35,7 +34,7 @@ extension AppsFlyer.Business.Saga {
     private func setup(with config: Model.Config) async {
         switch await svc.setup(with: config) {
             case .success: break
-            case let .failure(err):  print("Apps flyer setup error: \(err)")
+            case let .failure(err): print("Apps flyer setup error: \(err)")
         }
     }
 
