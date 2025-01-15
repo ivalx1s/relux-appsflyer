@@ -1,3 +1,4 @@
+import Foundation
 import Relux
 
 extension AppsFlyer.Business {
@@ -25,7 +26,11 @@ extension AppsFlyer.Business.Saga: AppsFlyer.Business.ISaga {
             case let .setup(config): await setup(with: config)
             case let .identifyUser(id): await identifyUser(id: id)
             case let .setUserData(data): await setUserData(data: data)
+            case let .startCollectMetrics(delay): await startCollectMetrics(with: delay)
             case let .track(event): await track(event: event)
+
+            case .obtainATTStatus: await obtainATTStatus()
+            case .requestATTPermission: await requestATTPermission()
       }
     }
 }
@@ -46,10 +51,29 @@ extension AppsFlyer.Business.Saga {
         await svc.setUserData(data)
     }
 
+    private func startCollectMetrics(with delay: TimeInterval) async {
+        switch await svc.startCollectMetrics(with: delay) {
+            case .success: break
+            case let .failure(err): print("Apps flyer start error: \(err)")
+        }
+    }
+
     private func track(event: Model.Event) async {
         switch await svc.track(event: event) {
             case .success: break
             case let .failure(err): print("Apps flyer track event\(event) error: \(err)")
         }
+    }
+}
+
+extension AppsFlyer.Business.Saga {
+    private func obtainATTStatus() async {
+        let status = await svc.getStatus()
+        await action { AppsFlyer.Business.Action.obtainStatusSuccess(status: status) }
+    }
+
+    private func requestATTPermission() async {
+        let status = await svc.requestStatus()
+        await action { AppsFlyer.Business.Action.requestStatusSuccess(status: status) }
     }
 }
