@@ -13,7 +13,7 @@ extension AppsFlyer.Business {
         func setUserData(_ data: Model.UserData) async
         func startCollectMetrics() async -> Result<Void, Err>
         func startCollectMetrics(with delay: TimeInterval) async -> Result<Void, Err>
-        func track(event: Model.Event) async ->  Result<Void, Err>
+        func track(event: Model.Event) async
 
         func getStatus() -> Model.ATTStatus
         func requestStatus() async -> Model.ATTStatus
@@ -76,16 +76,15 @@ extension AppsFlyer.Business.Service: AppsFlyer.Business.IService {
         appsFlyerSDK.customData = data
     }
 
-    public func track(event: AppsFlyer.Business.Model.Event) async -> Result<Void, Err> {
-        await withCheckedContinuation { ctn in
-            appsFlyerSDK.logEvent(
-                name: event.name,
-                values: event.data
-            ) { _, error in
-                switch error {
-                    case .none: ctn.resume(returning: .success(()))
-                    case let .some(err): ctn.resume(returning: .failure(.failedToTrack(event: event, cause: err)))
-                }
+    public func track(event: AppsFlyer.Business.Model.Event) async {
+        await appsFlyerSDK.logEvent(
+            name: event.name,
+            values: event.data
+        ) { result, error in
+            if let error {
+                AppsFlyer.log("track error: \(error)")
+            } else if let result {
+                AppsFlyer.log("track result: \(result)")
             }
         }
     }

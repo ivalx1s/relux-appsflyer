@@ -59,10 +59,7 @@ extension AppsFlyer.Business.Saga {
     }
 
     private func track(event: Model.Event) async {
-        switch await svc.track(event: event) {
-            case .success: break
-            case let .failure(err): print("Apps flyer track event\(event) error: \(err)")
-        }
+        await svc.track(event: event)
     }
 }
 
