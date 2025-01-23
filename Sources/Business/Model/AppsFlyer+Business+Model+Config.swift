@@ -1,9 +1,9 @@
 extension AppsFlyer.Business.Model {
     public struct Config {
-        let appId: String
-        let apiKey: String
-        let language: String
-        let debugEnabled: Bool
+        public let appId: String
+        public let apiKey: String
+        public let language: String
+        public let debugEnabled: Bool
 
         public init(
             appId: String,
