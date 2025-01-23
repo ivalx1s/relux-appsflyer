@@ -2,9 +2,9 @@ import Foundation
 
 extension AppsFlyer.Business.Model {
     public struct Event {
-        let name: String
-        let data: [String: Sendable]
-        let time: Date
+        public let name: String
+        public let data: [String: Sendable]
+        public let time: Date
 
         public init(
             name: String,
