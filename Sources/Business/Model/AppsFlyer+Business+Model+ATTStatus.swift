@@ -1,7 +1,7 @@
 import AppTrackingTransparency
 
-extension AppsFlyer.Business.Model {
-    public enum ATTStatus {
+public extension AppsFlyer.Business.Model {
+    enum ATTStatus {
         case undefined
         case denied
         case restricted

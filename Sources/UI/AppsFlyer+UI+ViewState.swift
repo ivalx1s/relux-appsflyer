@@ -2,14 +2,14 @@ import Relux
 import Foundation
 @preconcurrency import Combine
 
-extension AppsFlyer.UI {
+public extension AppsFlyer.UI {
     @MainActor
-    final class ViewState: Relux.Presentation.StatePresenting {
-        typealias Model = AppsFlyer.Business.Model
+    final class ViewState: Relux.Presentation.StatePresenting, ObservableObject {
+        public typealias Model = AppsFlyer.Business.Model
 
-        @Published var status: Model.ATTStatus?
+        @Published public private(set) var status: Model.ATTStatus?
 
-        init(
+        public init(
             state: AppsFlyer.Business.State
         ) {
             Task { await initPipelines(state: state) }
