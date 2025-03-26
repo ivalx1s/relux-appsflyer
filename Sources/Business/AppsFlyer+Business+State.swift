@@ -1,8 +1,8 @@
 import Relux
 import Combine
 
-public extension AppsFlyer.Business {
-    actor State: Relux.State {
+extension AppsFlyer.Business {
+    public final class State: Relux.HybridState, ObservableObject {
         @Published public private(set) var status: Model.ATTStatus?
         
         public init() {}

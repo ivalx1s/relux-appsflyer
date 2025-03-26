@@ -3,10 +3,8 @@ import Relux
 extension AppsFlyer {
     @MainActor
     public final class Module: Relux.Module {
-        public let states: [any Relux.State]
-        public let uistates: [any Relux.Presentation.StatePresenting]
+        public let states: [any Relux.AnyState]
         public let sagas: [any Relux.Saga]
-        public let routers: [any Relux.Navigation.RouterProtocol] = []
 
         public init(
         ) {
@@ -16,12 +14,9 @@ extension AppsFlyer {
 
             let state = AppsFlyer.Business.State()
             self.states = [state]
-            let viewState = AppsFlyer.UI.ViewState(state: state)
-            self.uistates = [viewState]
         }
     }
 }
-
 
 // log
 extension AppsFlyer {

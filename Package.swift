@@ -14,7 +14,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/ivalx1s/darwin-relux.git", .upToNextMajor(from: "5.1.0")),
+        .package(url: "https://github.com/ivalx1s/darwin-relux.git", .upToNextMajor(from: "8.0.1")),
         .package(url: "https://github.com/AppsFlyerSDK/AppsFlyerFramework-Dynamic", .upToNextMajor(from: "6.15.0")),
     ],
     targets: [
