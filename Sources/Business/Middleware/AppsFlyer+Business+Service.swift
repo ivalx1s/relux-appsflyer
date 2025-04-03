@@ -4,7 +4,13 @@ import AppTrackingTransparency
 import AdSupport
 
 extension AppsFlyer.Business {
-    public protocol IService: Actor {
+    public protocol IAppsFlyerIdProvider: Sendable {
+        var appsFlyerUID: String { get async }
+    }
+}
+
+extension AppsFlyer.Business {
+    public protocol IService: IAppsFlyerIdProvider, Actor {
         typealias Model = AppsFlyer.Business.Model
         typealias Err = AppsFlyer.Business.Err
 
@@ -33,6 +39,12 @@ extension AppsFlyer.Business {
 
 // appsfilyer
 extension AppsFlyer.Business.Service: AppsFlyer.Business.IService {
+    public var appsFlyerUID: String {
+        get async {
+            appsFlyerSDK.getAppsFlyerUID()
+        }
+    }
+
     public func setup(with config: Model.Config) async -> Result<Void, Err> {
         AppsFlyer.log("setup with config: \(config)")
 
