@@ -70,6 +70,7 @@ extension AppsFlyer.Business.Saga {
     }
 
     private func requestATTPermission() async {
+        await action { AppsFlyer.Business.Action.obtainStatusInProgress }
         let status = await svc.requestStatus()
         await action { AppsFlyer.Business.Action.requestStatusSuccess(status: status) }
     }
