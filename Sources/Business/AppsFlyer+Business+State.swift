@@ -5,6 +5,7 @@ extension AppsFlyer.Business {
     public final class State: Relux.HybridState, ObservableObject {
         @Published public private(set) var status: Model.ATTStatus?
         @Published public private(set) var attPermissionRequestState: Model.ATTPermissionState = .notAsked(.unknown)
+        @Published public private(set) var appsFlyerUID: String?
         
         public init() {}
     }
@@ -31,6 +32,8 @@ extension AppsFlyer.Business.State {
             let .requestStatusSuccess(status):
             
             self.status = status
+        case let .obtainUIDSuccess(uid):
+            self.appsFlyerUID = uid
             
         case let .setAttPermissionRequestState(state):
             self.attPermissionRequestState = state

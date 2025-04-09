@@ -8,7 +8,7 @@ extension AppsFlyer.Business {
         case setUserData(data: Model.UserData)
         case startCollectMetrics(withDelay: TimeInterval = 0)
         case track(event: Model.Event)
-
+        case obtainAppsFlyerUID
         case obtainATTStatus
         case requestATTPermission
     }
