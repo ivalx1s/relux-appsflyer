@@ -4,7 +4,7 @@ public extension AppsFlyer.Business.Model {
     /// Tracks the complete lifecycle of ATT permission requests
     enum ATTPermissionState {
         /// Tracking permission request hasn't been initiated yet
-        case notAsked
+        case notAsked(ATTStatus)
         /// Permission request is currently being presented to the user
         case inProgress
         /// Permission request was completed with a specific ATTStatus result

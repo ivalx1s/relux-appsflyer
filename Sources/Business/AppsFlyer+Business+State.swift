@@ -4,7 +4,7 @@ import Combine
 extension AppsFlyer.Business {
     public final class State: Relux.HybridState, ObservableObject {
         @Published public private(set) var status: Model.ATTStatus?
-        @Published public private(set) var attPermissionState: Model.ATTPermissionState? = .notAsked
+        @Published public private(set) var attPermissionRequestState: Model.ATTPermissionState = .notAsked(.unknown)
         
         public init() {}
     }
@@ -29,10 +29,11 @@ extension AppsFlyer.Business.State {
         case
             let .obtainStatusSuccess(status),
             let .requestStatusSuccess(status):
+            
             self.status = status
-            self.attPermissionState = .completed(status)
-        case .obtainStatusInProgress:
-            self.attPermissionState = .inProgress
+            
+        case let .setAttPermissionRequestState(state):
+            self.attPermissionRequestState = state
         }
     }
 }

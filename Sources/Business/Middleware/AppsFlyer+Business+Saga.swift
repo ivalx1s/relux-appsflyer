@@ -66,12 +66,19 @@ extension AppsFlyer.Business.Saga {
 extension AppsFlyer.Business.Saga {
     private func obtainATTStatus() async {
         let status = await svc.getStatus()
-        await action { AppsFlyer.Business.Action.obtainStatusSuccess(status: status) }
+        await action {
+            AppsFlyer.Business.Action.obtainStatusSuccess(status: status)
+        }
     }
 
     private func requestATTPermission() async {
-        await action { AppsFlyer.Business.Action.obtainStatusInProgress }
+        await action {
+            AppsFlyer.Business.Action.setAttPermissionRequestState(state: .inProgress)
+        }
         let status = await svc.requestStatus()
-        await action { AppsFlyer.Business.Action.requestStatusSuccess(status: status) }
+        await actions {
+            AppsFlyer.Business.Action.requestStatusSuccess(status: status)
+            AppsFlyer.Business.Action.setAttPermissionRequestState(state: .completed(status))
+        }
     }
 }
