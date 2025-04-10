@@ -3,6 +3,7 @@ import Combine
 
 extension AppsFlyer.Business {
     public final class State: Relux.HybridState, ObservableObject {
+        @Published public private(set) var startState: Model.AppsFlyerStartState = .unknown
         @Published public private(set) var status: Model.ATTStatus?
         @Published public private(set) var attPermissionRequestState: Model.ATTPermissionState = .notAsked(.unknown)
         @Published public private(set) var appsFlyerUID: String?
@@ -27,6 +28,9 @@ extension AppsFlyer.Business.State {
 extension AppsFlyer.Business.State {
     func _reduce(with action: AppsFlyer.Business.Action) async {
         switch action {
+        case let .setAppsFlyerLibStartState(state):
+            startState = state
+        
         case
             let .obtainStatusSuccess(status),
             let .requestStatusSuccess(status):

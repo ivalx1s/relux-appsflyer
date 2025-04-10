@@ -24,6 +24,24 @@ public extension AppsFlyer.Business.Model {
         /// Unknown status (future iOS versions)
         case unknown
     }
+    
+    /// Simplified representation of Library Initialization status
+    enum AppsFlyerStartState: Sendable, Hashable {
+        /// Library initialized successfully
+        case success
+        
+        /// Library initialization failed due to network issues
+        case networkFailure
+        
+        /// Library initialization failed due to incorrect configuration
+        case configurationError
+        
+        /// Library initialization failed due to unknown internal error
+        case libraryFailure
+        
+        /// Initialization state is unknown (e.g., unexpected future conditions, or initial state)
+        case unknown
+    }
 }
 
 // MARK: - Conversion Extensions

@@ -60,11 +60,29 @@ extension AppsFlyer.Business.Saga {
     }
     
     private func startCollectMetrics(with delay: TimeInterval) async {
-        switch await svc.startCollectMetrics(with: delay) {
+        let result = await svc.startCollectMetrics(with: delay)
+        
+        switch result {
         case .success:
-            break
-        case let .failure(err):
-            print("Apps flyer start error: \(err)")
+            await action {
+                AppsFlyer.Business.Action.setAppsFlyerLibStartState(.success)
+            }
+            
+        case .failure(let error):
+            print("AppsFlyer start error: \(error)")
+            
+            if case .failedToStart(let cause) = error {
+                let setStartState: AppsFlyer.Business.Action = switch cause {
+                case .badURL, .networkFailure:
+                        .setAppsFlyerLibStartState(.networkFailure)
+                case .timeout, .unknown:
+                        .setAppsFlyerLibStartState(.libraryFailure)
+                }
+                
+                await action {
+                    setStartState
+                }
+            }
         }
     }
     
